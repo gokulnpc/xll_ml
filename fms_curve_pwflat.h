@@ -7,9 +7,7 @@
 #include "fms_error.h"
 #include "fms_pwflat.h"
 #include "fms_curve.h"
-
 namespace fms::curve {
-
 	template<class T = double, class F = double>
 	class pwflat : public base<T, F> {
 		std::vector<T> t_;
@@ -17,7 +15,8 @@ namespace fms::curve {
 	public:
 		// constant curve
 		constexpr pwflat()
-		{ }
+		{
+		}
 		pwflat(size_t n, const T* t, const F* f)
 			: t_(t, t + n), f_(f, f + n)
 		{
@@ -33,13 +32,11 @@ namespace fms::curve {
 		pwflat(pwflat&&) = default;
 		pwflat& operator=(pwflat&&) = default;
 		virtual ~pwflat() = default;
-
 		// Equal values.
 		bool operator==(const pwflat& c) const
 		{
 			return t_ == c.t_ && f_ == c.f_;
 		}
-
 		F _forward(T u) const noexcept override
 		{
 			return fms::pwflat::forward(u, t_.size(), t_.data(), f_.data());
@@ -48,38 +45,30 @@ namespace fms::curve {
 		{
 			return fms::pwflat::integral(u, t_.size(), t_.data(), f_.data());
 		}
-
 		bool clear() noexcept
 		{
 			bool empty = t_.empty() and f_.empty();
-
 			t_.clear();
 			f_.clear();
-
 			return empty;
 		}
 		std::size_t size() const
 		{
 			return t_.size();
 		}
-		// TODO: change time return pointer constant T*
-		const auto time() const
+		const T* time() const
 		{
-			return t_.data(); // fms::iterable::make_interval(t_);
+			return t_.data();
 		}
-		// TODO: change rate return pointer constant F*
-		const auto rate() const
+		const F* rate() const
 		{
-			return f_.data(); // fms::iterable::make_interval(f_);
+			return f_.data();
 		}
-
 		pwflat& push_back(T t, F f)
 		{
 			ensure(size() == 0 || t >= t_.back());
-
 			t_.push_back(t);
 			f_.push_back(f);
-
 			return *this;
 		}
 		pwflat& push_back(std::pair<T, F> p)
@@ -91,7 +80,6 @@ namespace fms::curve {
 			return { t_.back(), f_.back() };
 		}
 	};
-
 #ifdef _DEBUG
 	inline int pwflat_test()
 	{
@@ -103,7 +91,6 @@ namespace fms::curve {
 			c2 = c;
 			assert(!(c2 != c));
 		}
-
 		return 0;
 	}
 #endif // _DEBUG

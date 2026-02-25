@@ -82,7 +82,8 @@ namespace fms::curve {
 	public:
 		constexpr constant(F f = 0)
 			: f(f)
-		{ }
+		{
+		}
 		constexpr constant(const constant& c) = default;
 		constexpr constant& operator=(const constant& c) = default;
 		constexpr ~constant() = default;
@@ -102,12 +103,11 @@ namespace fms::curve {
 		{
 			constexpr curve::constant c(1.);
 			static_assert(math::isnan(constant(1.).forward(-1)));
-			// TODO: replace assert by static_assert.
-			assert(c.forward(0.) == 1);
-			assert(c.integral(0.) == 0);
-			assert(c.integral(2.) == 2.);
-			assert(c.spot(0.) == 1);
-			assert(c.spot(1.) == 1);
+			static_assert(c.forward(0.) == 1);
+			static_assert(c.integral(0.) == 0);
+			static_assert(c.integral(2.) == 2.);
+			static_assert(c.spot(0.) == 1);
+			static_assert(c.spot(1.) == 1);
 		}
 
 		return 0;
@@ -143,15 +143,14 @@ namespace fms::curve {
 	inline int bump_test()
 	{
 		{
-			// TODO: use static_assert.
-			bump b(0.5, 1., 2.);
-			assert(b.forward(0.9) == 0);
-			assert(b.forward(1) == 0.5);
-			assert(b.forward(2) == 0.5);
-			assert(b.forward(2.1) == 0);
-			assert(b.integral(0) == 0);
-			assert(b.integral(1) == 0);
-			assert(b.integral(2) == 0.5);
+			constexpr bump b(0.5, 1., 2.);
+			static_assert(b.forward(0.9) == 0);
+			static_assert(b.forward(1) == 0.5);
+			static_assert(b.forward(2) == 0.5);
+			static_assert(b.forward(2.1) == 0);
+			static_assert(b.integral(0) == 0);
+			static_assert(b.integral(1) == 0);
+			static_assert(b.integral(2) == 0.5);
 		}
 
 		return 0;
