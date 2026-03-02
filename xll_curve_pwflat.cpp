@@ -68,8 +68,6 @@ _FP12* WINAPI xll_curve_pwflat(HANDLEX h)
 	return tf.get();
 }
 
-// TODO:NE Implement CURVE.FORWARD, CURVE.DISCOUNT, CURVE.SPOT
-// use `handle<curve::base<>> h_(h)
 AddIn xai_curve_forward(
 	Function(XLL_DOUBLE, L"?xll_curve_forward", CATEGORY L".CURVE.FORWARD")
 	.Arguments({

@@ -79,7 +79,6 @@ namespace fms::curve {
 #ifdef _DEBUG
 	inline int bootstrap_test()
 	{
-		// TODO:NE Delete code that is not working.
 		{
 			constexpr curve::constant<> f;
 			constexpr double r = 0.1;
